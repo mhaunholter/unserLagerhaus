@@ -52,6 +52,9 @@ namespace unserLagerhaus
             // cb_table
             // 
             this.cb_table.FormattingEnabled = true;
+            this.cb_table.Items.AddRange(new object[] {
+            "Produkte",
+            "Mitarbeiter"});
             this.cb_table.Location = new System.Drawing.Point(190, 74);
             this.cb_table.Name = "cb_table";
             this.cb_table.Size = new System.Drawing.Size(121, 21);
