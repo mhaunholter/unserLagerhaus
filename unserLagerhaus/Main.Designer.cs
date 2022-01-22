@@ -63,6 +63,7 @@ namespace unserLagerhaus
             this.cb_table.Size = new System.Drawing.Size(121, 21);
             this.cb_table.TabIndex = 2;
             this.cb_table.Text = "Produkte";
+            this.cb_table.SelectedIndexChanged += new System.EventHandler(this.cb_table_SelectedIndexChanged);
             // 
             // dgv_Table
             // 
