@@ -12,6 +12,7 @@ namespace unserLagerhaus
 {
     public partial class Main : Form
     {
+        private DataTable dataTable = new DataTable();
         public Main()
         {
             InitializeComponent();
@@ -23,6 +24,17 @@ namespace unserLagerhaus
             login.ShowDialog();
             SQL_Database.start();
             SQL_Database.create();
+            dataTable = SQL_Database.fill_Datagridview(cb_table.Text);
+            dgv_Table.DataSource = dataTable;
+            dgv_Table.Columns[0].ReadOnly = true;
+        }
+
+        private void cb_table_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            dataTable.Clear();
+            dgv_Table.DataSource = null;
+            dataTable = SQL_Database.fill_Datagridview(cb_table.Text);
+            dgv_Table.DataSource = dataTable;
         }
     }
 }
