@@ -32,11 +32,13 @@ namespace unserLagerhaus
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.btn_search = new System.Windows.Forms.Button();
             this.cb_table = new System.Windows.Forms.ComboBox();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dgv_Table = new System.Windows.Forms.DataGridView();
             this.pb_logo = new System.Windows.Forms.PictureBox();
-            this.cb_search = new System.Windows.Forms.ComboBox();
             this.cb_searchBy = new System.Windows.Forms.ComboBox();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.tb_searchFor = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_Table)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_logo)).BeginInit();
             this.SuspendLayout();
             // 
@@ -54,19 +56,22 @@ namespace unserLagerhaus
             this.cb_table.FormattingEnabled = true;
             this.cb_table.Items.AddRange(new object[] {
             "Produkte",
-            "Mitarbeiter"});
+            "Mitarbeiter",
+            "Bestellungen"});
             this.cb_table.Location = new System.Drawing.Point(190, 74);
             this.cb_table.Name = "cb_table";
             this.cb_table.Size = new System.Drawing.Size(121, 21);
             this.cb_table.TabIndex = 2;
+            this.cb_table.Text = "Produkte";
+            this.cb_table.SelectedIndexChanged += new System.EventHandler(this.cb_table_SelectedIndexChanged);
             // 
-            // dataGridView1
+            // dgv_Table
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(12, 125);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(776, 313);
-            this.dataGridView1.TabIndex = 6;
+            this.dgv_Table.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv_Table.Location = new System.Drawing.Point(12, 125);
+            this.dgv_Table.Name = "dgv_Table";
+            this.dgv_Table.Size = new System.Drawing.Size(776, 313);
+            this.dgv_Table.TabIndex = 6;
             // 
             // pb_logo
             // 
@@ -78,39 +83,59 @@ namespace unserLagerhaus
             this.pb_logo.TabIndex = 7;
             this.pb_logo.TabStop = false;
             // 
-            // cb_search
-            // 
-            this.cb_search.FormattingEnabled = true;
-            this.cb_search.Location = new System.Drawing.Point(190, 32);
-            this.cb_search.Name = "cb_search";
-            this.cb_search.Size = new System.Drawing.Size(362, 21);
-            this.cb_search.TabIndex = 8;
-            // 
             // cb_searchBy
             // 
             this.cb_searchBy.FormattingEnabled = true;
-            this.cb_searchBy.Location = new System.Drawing.Point(559, 32);
+            this.cb_searchBy.Location = new System.Drawing.Point(509, 32);
             this.cb_searchBy.Name = "cb_searchBy";
-            this.cb_searchBy.Size = new System.Drawing.Size(121, 21);
+            this.cb_searchBy.Size = new System.Drawing.Size(171, 21);
             this.cb_searchBy.TabIndex = 9;
+            // 
+            // tb_searchFor
+            // 
+            this.tb_searchFor.Location = new System.Drawing.Point(190, 33);
+            this.tb_searchFor.Name = "tb_searchFor";
+            this.tb_searchFor.Size = new System.Drawing.Size(313, 20);
+            this.tb_searchFor.TabIndex = 10;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(187, 17);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(71, 13);
+            this.label1.TabIndex = 11;
+            this.label1.Text = "Suchen nach";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(509, 13);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(37, 13);
+            this.label2.TabIndex = 12;
+            this.label2.Text = "Spalte";
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.tb_searchFor);
             this.Controls.Add(this.cb_searchBy);
-            this.Controls.Add(this.cb_search);
             this.Controls.Add(this.pb_logo);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.dgv_Table);
             this.Controls.Add(this.cb_table);
             this.Controls.Add(this.btn_search);
             this.Name = "Main";
             this.Text = "Main";
             this.Load += new System.EventHandler(this.Main_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_Table)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_logo)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -118,10 +143,12 @@ namespace unserLagerhaus
 
         private System.Windows.Forms.Button btn_search;
         private System.Windows.Forms.ComboBox cb_table;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgv_Table;
         private System.Windows.Forms.PictureBox pb_logo;
-        private System.Windows.Forms.ComboBox cb_search;
         private System.Windows.Forms.ComboBox cb_searchBy;
+        private System.Windows.Forms.TextBox tb_searchFor;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
     }
 }
 
