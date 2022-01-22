@@ -27,3 +27,14 @@ C:\Users\tobias.hain\Source\Repos\mhaunholter\unserLagerhaus\unserLagerhaus\obj\
 C:\Users\tobias.hain\Source\Repos\mhaunholter\unserLagerhaus\unserLagerhaus\obj\Debug\unserLagerhaus.pdb
 C:\Users\tobias.hain\Source\Repos\mhaunholter\unserLagerhaus\unserLagerhaus\obj\Debug\unserLagerhaus.Main.resources
 C:\Users\tobias.hain\Source\Repos\mhaunholter\unserLagerhaus\unserLagerhaus\obj\Debug\unserLagerhaus.Login.resources
+C:\Users\Markus\Source\Repos\mhaunholter\unserLagerhaus\unserLagerhaus\bin\Debug\unserLagerhaus.exe.config
+C:\Users\Markus\Source\Repos\mhaunholter\unserLagerhaus\unserLagerhaus\bin\Debug\unserLagerhaus.exe
+C:\Users\Markus\Source\Repos\mhaunholter\unserLagerhaus\unserLagerhaus\bin\Debug\unserLagerhaus.pdb
+C:\Users\Markus\Source\Repos\mhaunholter\unserLagerhaus\unserLagerhaus\obj\Debug\unserLagerhaus.csproj.AssemblyReference.cache
+C:\Users\Markus\Source\Repos\mhaunholter\unserLagerhaus\unserLagerhaus\obj\Debug\unserLagerhaus.Main.resources
+C:\Users\Markus\Source\Repos\mhaunholter\unserLagerhaus\unserLagerhaus\obj\Debug\unserLagerhaus.Login.resources
+C:\Users\Markus\Source\Repos\mhaunholter\unserLagerhaus\unserLagerhaus\obj\Debug\unserLagerhaus.Properties.Resources.resources
+C:\Users\Markus\Source\Repos\mhaunholter\unserLagerhaus\unserLagerhaus\obj\Debug\unserLagerhaus.csproj.GenerateResource.cache
+C:\Users\Markus\Source\Repos\mhaunholter\unserLagerhaus\unserLagerhaus\obj\Debug\unserLagerhaus.csproj.CoreCompileInputs.cache
+C:\Users\Markus\Source\Repos\mhaunholter\unserLagerhaus\unserLagerhaus\obj\Debug\unserLagerhaus.exe
+C:\Users\Markus\Source\Repos\mhaunholter\unserLagerhaus\unserLagerhaus\obj\Debug\unserLagerhaus.pdb
