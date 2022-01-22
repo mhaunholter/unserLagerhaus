@@ -1,2 +1,0 @@
-# unserLagerhaus
-SWP Jahresprojekt
