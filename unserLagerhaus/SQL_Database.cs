@@ -11,6 +11,7 @@ namespace unserLagerhaus
 {
     class SQL_Database
     {
+        //test
         private static SqlConnection con = new SqlConnection();
         private static SqlCommand cmd = new SqlCommand();
         private static string connectionstring;
