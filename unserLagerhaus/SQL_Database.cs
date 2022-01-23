@@ -7,6 +7,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Windows.Forms;
 using System.Data.SqlTypes;
+using System.IO;
 
 namespace unserLagerhaus
 {
@@ -54,6 +55,12 @@ namespace unserLagerhaus
                 cmd.ExecuteNonQuery();
                 cmd.CommandText = "create table [dbo].[Bestellungen]([ID] [int] IDENTITY(1,1) NOT NULL PRIMARY KEY,[Bestellt am][date], [Angekommen][date],[Bezahlt][nvarchar](4),[Bezeichnung][nvarchar](50),[Anzahl][int])";
                 cmd.ExecuteNonQuery();
+                string table = "Produkte";
+                ImportCSVtoDataTable(table);
+                table = "Mitarbeiter";
+                ImportCSVtoDataTable(table);
+                table = "Bestellungen";
+                ImportCSVtoDataTable(table);
                 con.Close();
             }catch(Exception ex)
             {
@@ -99,6 +106,36 @@ namespace unserLagerhaus
         public static void connectTable(string table)
         {
             tb = table;
+        }
+
+        private static void ImportCSVtoDataTable(string table)
+        {
+            DataTable csvData = new DataTable();
+            StreamReader csvReader = new StreamReader(@"..\..\Properties\"+table+".csv");
+            string[] headers = csvReader.ReadLine().Split(';');
+            foreach (string header in headers)
+            {
+                csvData.Columns.Add(header);
+            }
+            while (!csvReader.EndOfStream)
+            {
+                string[] rows = csvReader.ReadLine().Split(';');
+                DataRow dr = csvData.NewRow();
+                for (int i = 0; i < headers.Length; i++)
+                {
+                    dr[i] = rows[i];
+                }
+                csvData.Rows.Add(dr);
+                
+            }
+            SqlCommand cmd = new SqlCommand("Delete from " + table, con);
+            SqlBulkCopy bulkCopy = new SqlBulkCopy(con);
+            bulkCopy.BatchSize = 500;
+            bulkCopy.NotifyAfter = 1000;
+            bulkCopy.DestinationTableName = table;
+            cmd.ExecuteNonQuery();
+            SqlDecimal.Round(8, 2);
+            bulkCopy.WriteToServer(csvData);
         }
     }
 }
