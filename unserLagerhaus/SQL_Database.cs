@@ -6,20 +6,32 @@ using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
 using System.Windows.Forms;
+using System.Data.SqlTypes;
 
 namespace unserLagerhaus
 {
     class SQL_Database
     {
-        //test
         private static SqlConnection con = new SqlConnection();
         private static SqlCommand cmd = new SqlCommand();
         private static string connectionstring;
-        private string table;
+        private static string tb;
 
-        public static void start()
+        public static void start(bool integrated_security, string user, string password)
         {
-            con.ConnectionString = "Server=(localdb)\\MSSQLLocalDB;Integrated security=SSPI;";
+            switch (integrated_security)
+            {
+                case true:
+                    {
+                        con.ConnectionString = "Server=(localdb)\\MSSQLLocalDB;Integrated security=SSPI;";
+                        break;
+                    }
+                case false:
+                    {
+                        con.ConnectionString = "Server=(localdb)\\MSSQLLocalDB;Integrated security=SSPI;";
+                        break;
+                    }                                        
+            }
             connectionstring = con.ConnectionString;
         }
         
@@ -53,6 +65,7 @@ namespace unserLagerhaus
 
         public static DataTable fill_Datagridview(string table)
         {
+            tb = table;
             DataTable dataTable = new DataTable();
             con.ConnectionString = connectionstring;
             cmd.CommandText = "Select * from " + table;
@@ -67,5 +80,25 @@ namespace unserLagerhaus
             return dataTable;
         }
 
+        public static void saveTable(DataTable data)
+        {
+            SqlCommand cmd = new SqlCommand("Delete from " + tb, con);
+            SqlBulkCopy bulkCopy = new SqlBulkCopy(con);
+            bulkCopy.BatchSize = 500;
+            bulkCopy.NotifyAfter = 1000;
+            bulkCopy.DestinationTableName = tb;
+            con.Open();
+            cmd.ExecuteNonQuery();
+            cmd.CommandText = "DBCC CHECKIDENT('[" + tb + "]', RESEED, 0)";
+            cmd.ExecuteNonQuery();
+            SqlDecimal.Round(8, 2);
+            bulkCopy.WriteToServer(data);
+            con.Close();
+        }
+
+        public static void connectTable(string table)
+        {
+            tb = table;
+        }
     }
 }
