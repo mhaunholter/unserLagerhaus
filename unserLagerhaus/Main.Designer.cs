@@ -72,6 +72,7 @@ namespace unserLagerhaus
             this.dgv_Table.Name = "dgv_Table";
             this.dgv_Table.Size = new System.Drawing.Size(776, 313);
             this.dgv_Table.TabIndex = 6;
+            this.dgv_Table.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_Table_CellValueChanged);
             // 
             // pb_logo
             // 

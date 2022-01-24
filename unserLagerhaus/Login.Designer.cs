@@ -31,10 +31,12 @@ namespace unserLagerhaus
         {
             this.btn_login = new System.Windows.Forms.Button();
             this.tb_password = new System.Windows.Forms.TextBox();
-            this.tb_username = new System.Windows.Forms.TextBox();
+            this.tb_user = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.btn_close = new System.Windows.Forms.Button();
+            this.cb_type = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btn_login
@@ -49,22 +51,22 @@ namespace unserLagerhaus
             // 
             // tb_password
             // 
-            this.tb_password.Location = new System.Drawing.Point(93, 60);
+            this.tb_password.Location = new System.Drawing.Point(93, 74);
             this.tb_password.Name = "tb_password";
             this.tb_password.Size = new System.Drawing.Size(199, 20);
             this.tb_password.TabIndex = 1;
             // 
-            // tb_username
+            // tb_user
             // 
-            this.tb_username.Location = new System.Drawing.Point(93, 17);
-            this.tb_username.Name = "tb_username";
-            this.tb_username.Size = new System.Drawing.Size(199, 20);
-            this.tb_username.TabIndex = 2;
+            this.tb_user.Location = new System.Drawing.Point(93, 48);
+            this.tb_user.Name = "tb_user";
+            this.tb_user.Size = new System.Drawing.Size(199, 20);
+            this.tb_user.TabIndex = 2;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 20);
+            this.label1.Location = new System.Drawing.Point(12, 48);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(75, 13);
             this.label1.TabIndex = 3;
@@ -73,7 +75,7 @@ namespace unserLagerhaus
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 63);
+            this.label2.Location = new System.Drawing.Point(12, 77);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(50, 13);
             this.label2.TabIndex = 4;
@@ -89,15 +91,38 @@ namespace unserLagerhaus
             this.btn_close.UseVisualStyleBackColor = true;
             this.btn_close.Click += new System.EventHandler(this.btn_close_Click);
             // 
+            // cb_type
+            // 
+            this.cb_type.FormattingEnabled = true;
+            this.cb_type.Items.AddRange(new object[] {
+            "SSPI",
+            "Benutzer & Passwort"});
+            this.cb_type.Location = new System.Drawing.Point(93, 21);
+            this.cb_type.Name = "cb_type";
+            this.cb_type.Size = new System.Drawing.Size(199, 21);
+            this.cb_type.TabIndex = 6;
+            this.cb_type.SelectedIndexChanged += new System.EventHandler(this.cb_type_SelectedIndexChanged);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(13, 21);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(25, 13);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "Typ";
+            // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(304, 162);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.cb_type);
             this.Controls.Add(this.btn_close);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.tb_username);
+            this.Controls.Add(this.tb_user);
             this.Controls.Add(this.tb_password);
             this.Controls.Add(this.btn_login);
             this.Name = "Login";
@@ -112,9 +137,11 @@ namespace unserLagerhaus
 
         private System.Windows.Forms.Button btn_login;
         private System.Windows.Forms.TextBox tb_password;
-        private System.Windows.Forms.TextBox tb_username;
+        private System.Windows.Forms.TextBox tb_user;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btn_close;
+        private System.Windows.Forms.ComboBox cb_type;
+        private System.Windows.Forms.Label label3;
     }
 }
