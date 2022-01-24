@@ -17,15 +17,15 @@ namespace unserLagerhaus
         {
             InitializeComponent();
         }
-        //Dings
         private void Main_Load(object sender, EventArgs e)
         {
             Login login = new Login();
-            login.ShowDialog();            
+            login.ShowDialog();
             SQL_Database.create();
             dataTable = SQL_Database.fill_Datagridview(cb_table.Text);
             dgv_Table.DataSource = dataTable;
             dgv_Table.Columns[0].ReadOnly = true;
+            cb_searchBy_Change();
         }
 
         private void cb_table_SelectedIndexChanged(object sender, EventArgs e)
@@ -34,6 +34,7 @@ namespace unserLagerhaus
             dgv_Table.DataSource = null;
             dataTable = SQL_Database.fill_Datagridview(cb_table.Text);
             dgv_Table.DataSource = dataTable;
+            cb_searchBy_Change();
         }
 
         private void dgv_Table_CellValueChanged(object sender, DataGridViewCellEventArgs e)
@@ -75,6 +76,52 @@ namespace unserLagerhaus
                 if (dgv_Table.Rows.Count - 1 == data.Rows.Count) break;
             }
             SQL_Database.saveTable(data);
+        }
+        private void cb_searchBy_Change()
+        {
+            cb_searchBy.Items.Clear();
+            switch (cb_table.Text)
+            {
+                case "Produkte":
+                    {
+                        cb_searchBy.Items.Add("ID");
+                        cb_searchBy.Items.Add("Bezeichnung");
+                        cb_searchBy.Items.Add("Anzahl");
+                        cb_searchBy.Items.Add("Kategorie");
+                        cb_searchBy.Items.Add("Lagerabteilung");
+                        cb_searchBy.Items.Add("Regal");
+
+                        break;
+                    }
+                case "Mitarbeiter":
+                    {
+                        cb_searchBy.Items.Add("ID");
+                        cb_searchBy.Items.Add("Vorname");
+                        cb_searchBy.Items.Add("Nachname");
+                        cb_searchBy.Items.Add("Arbeitsstelle");
+                        cb_searchBy.Items.Add("Arbeitet seit");
+                        cb_searchBy.Items.Add("SV-Nummer");
+                        cb_searchBy.Items.Add("Gehalt");
+                        break;
+                    }
+                case "Bestellungen":
+                    {
+                        cb_searchBy.Items.Add("ID");
+                        cb_searchBy.Items.Add("Bestellt am");
+                        cb_searchBy.Items.Add("Angekommen");
+                        cb_searchBy.Items.Add("Bezahlt");
+                        cb_searchBy.Items.Add("Bezeichnung");
+                        cb_searchBy.Items.Add("Anzahl");
+                        break;
+                    }
+            }
+        }
+
+        private void btn_search_Click(object sender, EventArgs e)
+        {
+            dataTable = SQL_Database.Search(tb_searchFor.Text, cb_table.Text, cb_searchBy.Text);
+            dgv_Table.DataSource = null;
+            dgv_Table.DataSource = dataTable;
         }
     }
 }

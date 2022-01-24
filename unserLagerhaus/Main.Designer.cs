@@ -50,6 +50,7 @@ namespace unserLagerhaus
             this.btn_search.TabIndex = 0;
             this.btn_search.Text = "Suchen";
             this.btn_search.UseVisualStyleBackColor = true;
+            this.btn_search.Click += new System.EventHandler(this.btn_search_Click);
             // 
             // cb_table
             // 

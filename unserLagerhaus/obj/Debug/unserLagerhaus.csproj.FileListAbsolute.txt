@@ -38,3 +38,14 @@ C:\Users\Markus\Source\Repos\mhaunholter\unserLagerhaus\unserLagerhaus\obj\Debug
 C:\Users\Markus\Source\Repos\mhaunholter\unserLagerhaus\unserLagerhaus\obj\Debug\unserLagerhaus.csproj.CoreCompileInputs.cache
 C:\Users\Markus\Source\Repos\mhaunholter\unserLagerhaus\unserLagerhaus\obj\Debug\unserLagerhaus.exe
 C:\Users\Markus\Source\Repos\mhaunholter\unserLagerhaus\unserLagerhaus\obj\Debug\unserLagerhaus.pdb
+F:\3ITK\Lagerhaus\unserLagerhaus\bin\Debug\unserLagerhaus.exe.config
+F:\3ITK\Lagerhaus\unserLagerhaus\bin\Debug\unserLagerhaus.exe
+F:\3ITK\Lagerhaus\unserLagerhaus\bin\Debug\unserLagerhaus.pdb
+F:\3ITK\Lagerhaus\unserLagerhaus\obj\Debug\unserLagerhaus.csproj.AssemblyReference.cache
+F:\3ITK\Lagerhaus\unserLagerhaus\obj\Debug\unserLagerhaus.Main.resources
+F:\3ITK\Lagerhaus\unserLagerhaus\obj\Debug\unserLagerhaus.Login.resources
+F:\3ITK\Lagerhaus\unserLagerhaus\obj\Debug\unserLagerhaus.Properties.Resources.resources
+F:\3ITK\Lagerhaus\unserLagerhaus\obj\Debug\unserLagerhaus.csproj.GenerateResource.cache
+F:\3ITK\Lagerhaus\unserLagerhaus\obj\Debug\unserLagerhaus.csproj.CoreCompileInputs.cache
+F:\3ITK\Lagerhaus\unserLagerhaus\obj\Debug\unserLagerhaus.exe
+F:\3ITK\Lagerhaus\unserLagerhaus\obj\Debug\unserLagerhaus.pdb

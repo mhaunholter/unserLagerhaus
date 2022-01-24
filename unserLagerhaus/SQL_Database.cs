@@ -31,11 +31,11 @@ namespace unserLagerhaus
                     {
                         con.ConnectionString = "Server=(localdb)\\MSSQLLocalDB;Integrated security=SSPI;";
                         break;
-                    }                                        
+                    }
             }
             connectionstring = con.ConnectionString;
         }
-        
+
         public static void create()
         {
             try
@@ -47,7 +47,7 @@ namespace unserLagerhaus
                 con.Close();
                 connectionstring = connectionstring + "database=UnserLagerhaus_3ITK_Hain_Haunholter";
                 con.ConnectionString = connectionstring;
-                cmd.Connection = con;               
+                cmd.Connection = con;
                 con.Open();
                 cmd.CommandText = "create table [dbo].[Produkte]([ID] [int] IDENTITY(1,1) NOT NULL PRIMARY KEY, [Bezeichnung][nvarchar](50), [Anzahl][int],[Kategorie][nvarchar](50), [Lagerabteilung][int], [Regal][int])";
                 cmd.ExecuteNonQuery();
@@ -62,11 +62,11 @@ namespace unserLagerhaus
                 table = "Bestellungen";
                 ImportCSVtoDataTable(table);
                 con.Close();
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 con.Close();
                 connectionstring = connectionstring + "database=UnserLagerhaus_3ITK_Hain_Haunholter";
-                MessageBox.Show(ex.ToString());
             }
         }
 
@@ -83,7 +83,8 @@ namespace unserLagerhaus
                 sqlData.Fill(dataTable);
                 con.Close();
                 sqlData.Dispose();
-        } catch(Exception ex) { MessageBox.Show(ex.ToString()); }
+            }
+            catch (Exception ex) { MessageBox.Show(ex.ToString()); }
             return dataTable;
         }
 
@@ -111,7 +112,7 @@ namespace unserLagerhaus
         private static void ImportCSVtoDataTable(string table)
         {
             DataTable csvData = new DataTable();
-            StreamReader csvReader = new StreamReader(@"..\..\Properties\"+table+".csv");
+            StreamReader csvReader = new StreamReader(@"..\..\Properties\" + table + ".csv");
             string[] headers = csvReader.ReadLine().Split(';');
             foreach (string header in headers)
             {
@@ -126,7 +127,7 @@ namespace unserLagerhaus
                     dr[i] = rows[i];
                 }
                 csvData.Rows.Add(dr);
-                
+
             }
             SqlCommand cmd = new SqlCommand("Delete from " + table, con);
             SqlBulkCopy bulkCopy = new SqlBulkCopy(con);
@@ -136,6 +137,23 @@ namespace unserLagerhaus
             cmd.ExecuteNonQuery();
             SqlDecimal.Round(8, 2);
             bulkCopy.WriteToServer(csvData);
+        }
+
+        public static DataTable Search(string searchword, string table, string searchBy)
+        {
+            DataTable dataTable = new DataTable();
+            string commandtext = "Select * from " + table + " Where " + searchBy + " like '" + searchword + "%'";
+            cmd.CommandText = commandtext;
+            try
+            {
+                con.Open();
+                SqlDataAdapter sqlData = new SqlDataAdapter(cmd);
+                sqlData.Fill(dataTable);
+                con.Close();
+                sqlData.Dispose();
+            }
+            catch (Exception ex) { MessageBox.Show(ex.ToString()); }
+            return dataTable;
         }
     }
 }
