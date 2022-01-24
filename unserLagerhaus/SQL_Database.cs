@@ -110,7 +110,6 @@ namespace unserLagerhaus
 
         private static void ImportCSVtoDataTable(string table)
         {
-            //Super Code
             DataTable csvData = new DataTable();
             StreamReader csvReader = new StreamReader(@"..\..\Properties\"+table+".csv");
             string[] headers = csvReader.ReadLine().Split(';');
