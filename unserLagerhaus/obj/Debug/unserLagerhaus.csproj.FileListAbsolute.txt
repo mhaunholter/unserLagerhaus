@@ -49,3 +49,14 @@ F:\3ITK\Lagerhaus\unserLagerhaus\obj\Debug\unserLagerhaus.csproj.GenerateResourc
 F:\3ITK\Lagerhaus\unserLagerhaus\obj\Debug\unserLagerhaus.csproj.CoreCompileInputs.cache
 F:\3ITK\Lagerhaus\unserLagerhaus\obj\Debug\unserLagerhaus.exe
 F:\3ITK\Lagerhaus\unserLagerhaus\obj\Debug\unserLagerhaus.pdb
+F:\3ITK\3ITK_SWP_Hain_Haunholter\unserLagerhaus\bin\Debug\unserLagerhaus.exe.config
+F:\3ITK\3ITK_SWP_Hain_Haunholter\unserLagerhaus\bin\Debug\unserLagerhaus.exe
+F:\3ITK\3ITK_SWP_Hain_Haunholter\unserLagerhaus\bin\Debug\unserLagerhaus.pdb
+F:\3ITK\3ITK_SWP_Hain_Haunholter\unserLagerhaus\obj\Debug\unserLagerhaus.csproj.AssemblyReference.cache
+F:\3ITK\3ITK_SWP_Hain_Haunholter\unserLagerhaus\obj\Debug\unserLagerhaus.Main.resources
+F:\3ITK\3ITK_SWP_Hain_Haunholter\unserLagerhaus\obj\Debug\unserLagerhaus.Login.resources
+F:\3ITK\3ITK_SWP_Hain_Haunholter\unserLagerhaus\obj\Debug\unserLagerhaus.Properties.Resources.resources
+F:\3ITK\3ITK_SWP_Hain_Haunholter\unserLagerhaus\obj\Debug\unserLagerhaus.csproj.GenerateResource.cache
+F:\3ITK\3ITK_SWP_Hain_Haunholter\unserLagerhaus\obj\Debug\unserLagerhaus.csproj.CoreCompileInputs.cache
+F:\3ITK\3ITK_SWP_Hain_Haunholter\unserLagerhaus\obj\Debug\unserLagerhaus.exe
+F:\3ITK\3ITK_SWP_Hain_Haunholter\unserLagerhaus\obj\Debug\unserLagerhaus.pdb
