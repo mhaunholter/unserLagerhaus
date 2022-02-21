@@ -17,6 +17,12 @@ namespace unserLagerhaus
         {
             InitializeComponent();
         }
+
+        /*
+         * Todos
+         * Export to CSV
+         * Admin who can change, add and edit Tables
+         */
         private void Main_Load(object sender, EventArgs e)
         {
             Login login = new Login();
@@ -34,6 +40,7 @@ namespace unserLagerhaus
             dgv_Table.DataSource = null;
             dataTable = SQL_Database.fill_Datagridview(cb_table.Text);
             dgv_Table.DataSource = dataTable;
+            dgv_Table.Columns[0].ReadOnly = true;
             cb_searchBy_Change();
         }
 
@@ -122,6 +129,19 @@ namespace unserLagerhaus
             dataTable = SQL_Database.Search(tb_searchFor.Text, cb_table.Text, cb_searchBy.Text);
             dgv_Table.DataSource = null;
             dgv_Table.DataSource = dataTable;
+        }
+
+        private void btn_export_Click(object sender, EventArgs e)
+        {
+            string path;
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "CSV|*.csv";
+            if(saveFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                path = saveFileDialog.FileName;
+            }
+            btn_export.Text = "Fertig";
+
         }
     }
 }
