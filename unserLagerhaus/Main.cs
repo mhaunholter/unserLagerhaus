@@ -133,15 +133,15 @@ namespace unserLagerhaus
 
         private void btn_export_Click(object sender, EventArgs e)
         {
-            string path;
+            string path ="";
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "CSV|*.csv";
             if(saveFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 path = saveFileDialog.FileName;
             }
-            btn_export.Text = "Fertig";
-
+            btn_export.Text = path;
+            SQL_Database.ImportCSV(path.Replace("\\", "/"), cb_table.Text);
         }
     }
 }

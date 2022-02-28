@@ -39,6 +39,7 @@ namespace unserLagerhaus
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.btn_export = new System.Windows.Forms.Button();
+            this.btn_import = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Table)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_logo)).BeginInit();
             this.SuspendLayout();
@@ -121,7 +122,7 @@ namespace unserLagerhaus
             // 
             // btn_export
             // 
-            this.btn_export.Location = new System.Drawing.Point(360, 74);
+            this.btn_export.Location = new System.Drawing.Point(411, 74);
             this.btn_export.Name = "btn_export";
             this.btn_export.Size = new System.Drawing.Size(75, 23);
             this.btn_export.TabIndex = 13;
@@ -129,11 +130,21 @@ namespace unserLagerhaus
             this.btn_export.UseVisualStyleBackColor = true;
             this.btn_export.Click += new System.EventHandler(this.btn_export_Click);
             // 
+            // btn_import
+            // 
+            this.btn_import.Location = new System.Drawing.Point(330, 74);
+            this.btn_import.Name = "btn_import";
+            this.btn_import.Size = new System.Drawing.Size(75, 23);
+            this.btn_import.TabIndex = 14;
+            this.btn_import.Text = "Importieren";
+            this.btn_import.UseVisualStyleBackColor = true;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btn_import);
             this.Controls.Add(this.btn_export);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -164,6 +175,7 @@ namespace unserLagerhaus
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btn_export;
+        private System.Windows.Forms.Button btn_import;
     }
 }
 
