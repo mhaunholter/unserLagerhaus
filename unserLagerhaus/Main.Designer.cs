@@ -138,6 +138,7 @@ namespace unserLagerhaus
             this.btn_import.TabIndex = 14;
             this.btn_import.Text = "Importieren";
             this.btn_import.UseVisualStyleBackColor = true;
+            this.btn_import.Click += new System.EventHandler(this.btn_import_Click);
             // 
             // Main
             // 

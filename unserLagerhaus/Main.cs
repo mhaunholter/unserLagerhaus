@@ -48,40 +48,8 @@ namespace unserLagerhaus
         {
             DataTable data = new DataTable();
             data.Clear();
-            foreach (DataGridViewColumn column in dgv_Table.Columns)
-            {
-                data.Columns.Add(column.HeaderText, column.ValueType);
-            }
-            foreach (DataGridViewRow row in dgv_Table.Rows)
-            {
-
-                int i = 1;
-                data.Rows.Add();
-                foreach (DataGridViewCell cell in row.Cells)
-                {
-                    if (cell.ColumnIndex == 0)
-                    {
-                        data.Rows[data.Rows.Count - 1][cell.ColumnIndex] = i;
-                    }
-                    else
-                    {
-                        if (cell.Value.ToString() == "") { }
-                        else
-                        {
-                            try
-                            {
-                                data.Rows[data.Rows.Count - 1][cell.ColumnIndex] = cell.Value.ToString();
-                            }
-                            catch
-                            {
-                                data.Rows[data.Rows.Count - 1][cell.ColumnIndex] = Convert.ToDecimal(cell.Value);
-                            }
-
-                        }
-                    }
-                }
-                if (dgv_Table.Rows.Count - 1 == data.Rows.Count) break;
-            }
+            TableToDataTable(data);
+           
             SQL_Database.saveTable(data);
         }
         private void cb_searchBy_Change()
@@ -135,13 +103,61 @@ namespace unserLagerhaus
         {
             string path ="";
             SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "CSV|*.csv";
+            saveFileDialog.Filter = "XML|*.xml";
             if(saveFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 path = saveFileDialog.FileName;
             }
             btn_export.Text = path;
-            SQL_Database.ImportCSV(path.Replace("\\", "/"), cb_table.Text);
+            DataTable data = new DataTable();
+            TableToDataTable(data);
+            SQL_Database.ExportCSV(path.Replace("\\", "/"), data);
+        }
+
+        private DataTable TableToDataTable(DataTable data)
+        {
+            foreach (DataGridViewColumn column in dgv_Table.Columns)
+            {
+                data.Columns.Add(column.HeaderText, column.ValueType);
+            }
+            foreach (DataGridViewRow row in dgv_Table.Rows)
+            {
+
+                int i = 1;
+                data.Rows.Add();
+                foreach (DataGridViewCell cell in row.Cells)
+                {
+                    if (cell.ColumnIndex == 0)
+                    {
+                        data.Rows[data.Rows.Count - 1][cell.ColumnIndex] = i;
+                    }
+                    else
+                    {
+                        if (cell.Value.ToString() == "") { }
+                        else
+                        {
+                            try
+                            {
+                                data.Rows[data.Rows.Count - 1][cell.ColumnIndex] = cell.Value.ToString();
+                            }
+                            catch
+                            {
+                                data.Rows[data.Rows.Count - 1][cell.ColumnIndex] = Convert.ToDecimal(cell.Value);
+                            }
+
+                        }
+                    }
+                }
+                if (dgv_Table.Rows.Count - 1 == data.Rows.Count) break;
+            }
+            return data;
+        }
+
+        private void btn_import_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.ShowDialog();
+
         }
     }
 }

@@ -156,35 +156,13 @@ namespace unserLagerhaus
             return dataTable;
         }
 
-        public static void ImportCSV(string path, string table)
+        public static void ExportCSV(string path, DataTable data)
         {
-            SqlCommand cmd = new SqlCommand("Delete from " + table, con);
-            DataTable csvData = new DataTable();
-            StreamReader csvReader = new StreamReader(path);
-            string[] headers = csvReader.ReadLine().Split(';');
-            foreach (string header in headers)
-            {
-                csvData.Columns.Add(header);
-            }
-            while (!csvReader.EndOfStream)
-            {
-                string[] rows = csvReader.ReadLine().Split(';');
-                DataRow dr = csvData.NewRow();
-                for (int i = 0; i < headers.Length; i++)
-                {
-                    dr[i] = rows[i];
-                }
-                csvData.Rows.Add(dr);
-
-            }
-            SqlBulkCopy bulkCopy = new SqlBulkCopy(con);
-            bulkCopy.DestinationTableName = table;           
-            cmd.CommandText = "Delete from " + table;
-            con.Open();
-            cmd.ExecuteNonQuery();            
-            SqlDecimal.Round(8, 2);
-            bulkCopy.WriteToServer(csvData);
-            con.Close();
+            var dataSet = new DataSet();
+            dataSet.Tables.Add(data);
+            dataSet.WriteXml(path);
+            DataTable table = new DataTable();
+            
         }
     }
 }
