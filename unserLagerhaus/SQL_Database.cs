@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 using System.Windows.Forms;
 using System.Data.SqlTypes;
 using System.IO;
+using FileHelpers;
 
 namespace unserLagerhaus
 {
@@ -56,17 +57,17 @@ namespace unserLagerhaus
                 cmd.CommandText = "create table [dbo].[Bestellungen]([ID] [int] IDENTITY(1,1) NOT NULL PRIMARY KEY,[Bestellt am][date], [Angekommen][date],[Bezahlt][nvarchar](4),[Bezeichnung][nvarchar](50),[Anzahl][int])";
                 cmd.ExecuteNonQuery();
                 string table = "Produkte";
-                ImportCSVtoDataTable(table);
+                ImportCSV(table);
                 table = "Mitarbeiter";
-                ImportCSVtoDataTable(table);
+                ImportCSV(table);
                 table = "Bestellungen";
-                ImportCSVtoDataTable(table);
+                ImportCSV(table);
                 con.Close();
             }
             catch (Exception ex)
             {
                 con.Close();
-                connectionstring = connectionstring + "database=UnserLagerhaus_3ITK_Hain_Haunholter";
+                connectionstring = connectionstring + "database=UnserLagerhaus_3ITK_Hain";
             }
         }
 
@@ -109,34 +110,51 @@ namespace unserLagerhaus
             tb = table;
         }
 
-        private static void ImportCSVtoDataTable(string table)
-        {
-            DataTable csvData = new DataTable();
-            StreamReader csvReader = new StreamReader(@"..\..\Properties\" + table + ".csv");
-            string[] headers = csvReader.ReadLine().Split(';');
-            foreach (string header in headers)
+        private static void ImportCSV(string table)
+        {            
+            if(table == "Produkte" || table == "Mitarbeiter" || table == "Bestellungen")
             {
-                csvData.Columns.Add(header);
+                string filename = @"..\..\Properties\" + table + ".csv";
             }
-            while (!csvReader.EndOfStream)
+            else
             {
-                string[] rows = csvReader.ReadLine().Split(';');
-                DataRow dr = csvData.NewRow();
-                for (int i = 0; i < headers.Length; i++)
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.ShowDialog();
+                if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-                    dr[i] = rows[i];
+                   string filename = openFileDialog.FileName;
                 }
-                csvData.Rows.Add(dr);
-
             }
-            SqlCommand cmd = new SqlCommand("Delete from " + table, con);
-            SqlBulkCopy bulkCopy = new SqlBulkCopy(con);
-            bulkCopy.BatchSize = 500;
-            bulkCopy.NotifyAfter = 1000;
-            bulkCopy.DestinationTableName = table;
-            cmd.ExecuteNonQuery();
-            SqlDecimal.Round(8, 2);
-            bulkCopy.WriteToServer(csvData);
+
+
+
+            
+            //DataTable csvData = new DataTable();
+            //StreamReader csvReader = new StreamReader(@"..\..\Properties\" + table + ".csv");
+            //string[] headers = csvReader.ReadLine().Split(';');
+            //foreach (string header in headers)
+            //{
+            //    csvData.Columns.Add(header);
+            //}
+            //while (!csvReader.EndOfStream)
+            //{
+            //    string[] rows = csvReader.ReadLine().Split(';');
+            //    DataRow dr = csvData.NewRow();
+            //    for (int i = 0; i < headers.Length; i++)
+            //    {
+            //        dr[i] = rows[i];
+            //    }
+            //    csvData.Rows.Add(dr);
+
+            //}
+            //SqlCommand cmd = new SqlCommand("Delete from " + table, con);
+            //SqlBulkCopy bulkCopy = new SqlBulkCopy(con);
+            //bulkCopy.BatchSize = 500;
+            //bulkCopy.NotifyAfter = 1000;
+            //bulkCopy.DestinationTableName = table;
+            //cmd.ExecuteNonQuery();
+            //SqlDecimal.Round(8, 2);
+            //bulkCopy.WriteToServer(csvData);
         }
 
         public static DataTable Search(string searchword, string table, string searchBy)
@@ -156,12 +174,9 @@ namespace unserLagerhaus
             return dataTable;
         }
 
-        public static void ExportCSV(string path, DataTable data)
+        public static void ExportXml(string path, DataTable data)
         {
-            var dataSet = new DataSet();
-            dataSet.Tables.Add(data);
-            dataSet.WriteXml(path);
-            DataTable table = new DataTable();
+
             
         }
     }

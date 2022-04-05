@@ -111,7 +111,7 @@ namespace unserLagerhaus
             btn_export.Text = path;
             DataTable data = new DataTable();
             TableToDataTable(data);
-            SQL_Database.ExportCSV(path.Replace("\\", "/"), data);
+            SQL_Database.ExportXml(path.Replace("\\", "/"), data);
         }
 
         private DataTable TableToDataTable(DataTable data)
