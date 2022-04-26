@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
 using System.Windows.Forms;
 using System.Data.SqlTypes;
 using System.IO;
-using FileHelpers;
 
 namespace unserLagerhaus
 {
@@ -41,12 +36,12 @@ namespace unserLagerhaus
         {
             try
             {
-                cmd.CommandText = "create database UnserLagerhaus_3ITK_Hain_Haunholter";
+                cmd.CommandText = "create database UnserLagerhaus_3ITK_Hain";
                 cmd.Connection = con;
                 con.Open();
                 cmd.ExecuteNonQuery();
                 con.Close();
-                connectionstring = connectionstring + "database=UnserLagerhaus_3ITK_Hain_Haunholter";
+                connectionstring = connectionstring + "database=UnserLagerhaus_3ITK_Hain";
                 con.ConnectionString = connectionstring;
                 cmd.Connection = con;
                 con.Open();
@@ -110,51 +105,47 @@ namespace unserLagerhaus
             tb = table;
         }
 
-        private static void ImportCSV(string table)
-        {            
+        public static void ImportCSV(string table)
+        {
+            string filename = "";
             if(table == "Produkte" || table == "Mitarbeiter" || table == "Bestellungen")
             {
-                string filename = @"..\..\Properties\" + table + ".csv";
+                 filename = @"..\..\Properties\" + table + ".csv";
             }
             else
             {
                 OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.ShowDialog();
                 if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-                   string filename = openFileDialog.FileName;
+                    filename = openFileDialog.FileName;
                 }
             }
+            StreamReader csvReader = new StreamReader(filename);
+            DataTable csvData = new DataTable();
+            string[] headers = csvReader.ReadLine().Split(';');
+            foreach (string header in headers)
+            {
+                csvData.Columns.Add(header);
+            }
+            while (!csvReader.EndOfStream)
+            {
+                string[] rows = csvReader.ReadLine().Split(';');
+                DataRow dr = csvData.NewRow();
+                for (int i = 0; i < headers.Length; i++)
+                {
+                    dr[i] = rows[i];
+                }
+                csvData.Rows.Add(dr);
 
-
-
-            
-            //DataTable csvData = new DataTable();
-            //StreamReader csvReader = new StreamReader(@"..\..\Properties\" + table + ".csv");
-            //string[] headers = csvReader.ReadLine().Split(';');
-            //foreach (string header in headers)
-            //{
-            //    csvData.Columns.Add(header);
-            //}
-            //while (!csvReader.EndOfStream)
-            //{
-            //    string[] rows = csvReader.ReadLine().Split(';');
-            //    DataRow dr = csvData.NewRow();
-            //    for (int i = 0; i < headers.Length; i++)
-            //    {
-            //        dr[i] = rows[i];
-            //    }
-            //    csvData.Rows.Add(dr);
-
-            //}
-            //SqlCommand cmd = new SqlCommand("Delete from " + table, con);
-            //SqlBulkCopy bulkCopy = new SqlBulkCopy(con);
-            //bulkCopy.BatchSize = 500;
-            //bulkCopy.NotifyAfter = 1000;
-            //bulkCopy.DestinationTableName = table;
-            //cmd.ExecuteNonQuery();
-            //SqlDecimal.Round(8, 2);
-            //bulkCopy.WriteToServer(csvData);
+            }
+            SqlCommand cmd = new SqlCommand("Delete from " + table, con);
+            SqlBulkCopy bulkCopy = new SqlBulkCopy(con);
+            bulkCopy.BatchSize = 500;
+            bulkCopy.NotifyAfter = 1000;
+            bulkCopy.DestinationTableName = table;
+            cmd.ExecuteNonQuery();
+            SqlDecimal.Round(8, 2);
+            bulkCopy.WriteToServer(csvData);
         }
 
         public static DataTable Search(string searchword, string table, string searchBy)

@@ -60,3 +60,5 @@ F:\3ITK\3ITK_SWP_Hain_Haunholter\unserLagerhaus\obj\Debug\unserLagerhaus.csproj.
 F:\3ITK\3ITK_SWP_Hain_Haunholter\unserLagerhaus\obj\Debug\unserLagerhaus.csproj.CoreCompileInputs.cache
 F:\3ITK\3ITK_SWP_Hain_Haunholter\unserLagerhaus\obj\Debug\unserLagerhaus.exe
 F:\3ITK\3ITK_SWP_Hain_Haunholter\unserLagerhaus\obj\Debug\unserLagerhaus.pdb
+C:\Users\tobias.hain\Source\Repos\mhaunholter\unserLagerhaus\unserLagerhaus\bin\Debug\FileHelpers.dll
+C:\Users\tobias.hain\Source\Repos\mhaunholter\unserLagerhaus\unserLagerhaus\bin\Debug\FileHelpers.xml

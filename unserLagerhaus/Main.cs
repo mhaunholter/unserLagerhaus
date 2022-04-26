@@ -20,6 +20,7 @@ namespace unserLagerhaus
 
         /*
          * Todos
+         * Import CSV + create SQL Table
          * Export to CSV
          * Admin who can change, add and edit Tables
          */
@@ -157,6 +158,8 @@ namespace unserLagerhaus
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.ShowDialog();
+            
+            SQL_Database.ImportCSV("");
 
         }
     }
