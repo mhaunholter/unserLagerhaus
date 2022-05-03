@@ -56,41 +56,41 @@ namespace unserLagerhaus
         private void cb_searchBy_Change()
         {
             cb_searchBy.Items.Clear();
-            switch (cb_table.Text)
-            {
-                case "Produkte":
-                    {
-                        cb_searchBy.Items.Add("ID");
-                        cb_searchBy.Items.Add("Bezeichnung");
-                        cb_searchBy.Items.Add("Anzahl");
-                        cb_searchBy.Items.Add("Kategorie");
-                        cb_searchBy.Items.Add("Lagerabteilung");
-                        cb_searchBy.Items.Add("Regal");
+            //switch (cb_table.Text)
+            //{
+            //    case "Produkte":
+            //        {
+            //            cb_searchBy.Items.Add("ID");
+            //            cb_searchBy.Items.Add("Bezeichnung");
+            //            cb_searchBy.Items.Add("Anzahl");
+            //            cb_searchBy.Items.Add("Kategorie");
+            //            cb_searchBy.Items.Add("Lagerabteilung");
+            //            cb_searchBy.Items.Add("Regal");
 
-                        break;
-                    }
-                case "Mitarbeiter":
-                    {
-                        cb_searchBy.Items.Add("ID");
-                        cb_searchBy.Items.Add("Vorname");
-                        cb_searchBy.Items.Add("Nachname");
-                        cb_searchBy.Items.Add("Arbeitsstelle");
-                        cb_searchBy.Items.Add("Arbeitet seit");
-                        cb_searchBy.Items.Add("SV-Nummer");
-                        cb_searchBy.Items.Add("Gehalt");
-                        break;
-                    }
-                case "Bestellungen":
-                    {
-                        cb_searchBy.Items.Add("ID");
-                        cb_searchBy.Items.Add("Bestellt am");
-                        cb_searchBy.Items.Add("Angekommen");
-                        cb_searchBy.Items.Add("Bezahlt");
-                        cb_searchBy.Items.Add("Bezeichnung");
-                        cb_searchBy.Items.Add("Anzahl");
-                        break;
-                    }
-            }
+            //            break;
+            //        }
+            //    case "Mitarbeiter":
+            //        {
+            //            cb_searchBy.Items.Add("ID");
+            //            cb_searchBy.Items.Add("Vorname");
+            //            cb_searchBy.Items.Add("Nachname");
+            //            cb_searchBy.Items.Add("Arbeitsstelle");
+            //            cb_searchBy.Items.Add("Arbeitet seit");
+            //            cb_searchBy.Items.Add("SV-Nummer");
+            //            cb_searchBy.Items.Add("Gehalt");
+            //            break;
+            //        }
+            //    case "Bestellungen":
+            //        {
+            //            cb_searchBy.Items.Add("ID");
+            //            cb_searchBy.Items.Add("Bestellt am");
+            //            cb_searchBy.Items.Add("Angekommen");
+            //            cb_searchBy.Items.Add("Bezahlt");
+            //            cb_searchBy.Items.Add("Bezeichnung");
+            //            cb_searchBy.Items.Add("Anzahl");
+            //            break;
+            //        }
+            //}
         }
 
         private void btn_search_Click(object sender, EventArgs e)
@@ -104,7 +104,7 @@ namespace unserLagerhaus
         {
             string path ="";
             SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "XML|*.xml";
+            saveFileDialog.Filter = "CSV|*.csv";
             if(saveFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 path = saveFileDialog.FileName;
@@ -112,7 +112,7 @@ namespace unserLagerhaus
             btn_export.Text = path;
             DataTable data = new DataTable();
             TableToDataTable(data);
-            SQL_Database.ExportXml(path.Replace("\\", "/"), data);
+            SQL_Database.ExportCSV(path.Replace("\\", "/"), data);
         }
 
         private DataTable TableToDataTable(DataTable data)
@@ -156,9 +156,6 @@ namespace unserLagerhaus
 
         private void btn_import_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.ShowDialog();
-            
             SQL_Database.ImportCSV("");
 
         }

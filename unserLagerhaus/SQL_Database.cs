@@ -165,10 +165,45 @@ namespace unserLagerhaus
             return dataTable;
         }
 
-        public static void ExportXml(string path, DataTable data)
+        public static void ExportCSV(string path, DataTable data)
         {
+            StreamWriter sw = new StreamWriter(path, false);
+            //headers    
+            for (int i = 0; i < data.Columns.Count; i++)
+            {
+                sw.Write(data.Columns[i]);
+                if (i < data.Columns.Count - 1)
+                {
+                    sw.Write(";");
+                }
+            }
+            sw.Write(sw.NewLine);
+            foreach (DataRow dr in data.Rows)
+            {
+                for (int i = 0; i < data.Columns.Count; i++)
+                {
+                    if (!Convert.IsDBNull(dr[i]))
+                    {
+                        string value = dr[i].ToString();
+                        if (value.Contains(";"))
+                        {
+                            value = String.Format("\"{0}\"", value);
+                            sw.Write(value);
+                        }
+                        else
+                        {
+                            sw.Write(dr[i].ToString());
+                        }
+                    }
+                    if (i < data.Columns.Count - 1)
+                    {
+                        sw.Write(";");
+                    }
+                }
+                sw.Write(sw.NewLine);
+            }
+            sw.Close();
 
-            
         }
     }
 }

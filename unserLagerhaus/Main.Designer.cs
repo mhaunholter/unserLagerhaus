@@ -122,7 +122,7 @@ namespace unserLagerhaus
             // 
             // btn_export
             // 
-            this.btn_export.Location = new System.Drawing.Point(411, 74);
+            this.btn_export.Location = new System.Drawing.Point(438, 74);
             this.btn_export.Name = "btn_export";
             this.btn_export.Size = new System.Drawing.Size(75, 23);
             this.btn_export.TabIndex = 13;
@@ -134,9 +134,9 @@ namespace unserLagerhaus
             // 
             this.btn_import.Location = new System.Drawing.Point(330, 74);
             this.btn_import.Name = "btn_import";
-            this.btn_import.Size = new System.Drawing.Size(75, 23);
+            this.btn_import.Size = new System.Drawing.Size(102, 23);
             this.btn_import.TabIndex = 14;
-            this.btn_import.Text = "Importieren";
+            this.btn_import.Text = "Daten importieren";
             this.btn_import.UseVisualStyleBackColor = true;
             this.btn_import.Click += new System.EventHandler(this.btn_import_Click);
             // 
