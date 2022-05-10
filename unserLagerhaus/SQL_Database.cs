@@ -108,9 +108,9 @@ namespace unserLagerhaus
         public static void ImportCSV(string table)
         {
             string filename = "";
-            if(table == "Produkte" || table == "Mitarbeiter" || table == "Bestellungen")
+            if (table == "Produkte" || table == "Mitarbeiter" || table == "Bestellungen")
             {
-                 filename = @"..\..\Properties\" + table + ".csv";
+                filename = @"..\..\Properties\" + table + ".csv";
             }
             else
             {
@@ -136,7 +136,10 @@ namespace unserLagerhaus
                     dr[i] = rows[i];
                 }
                 csvData.Rows.Add(dr);
-
+                if (table != "Produkte" || table != "Mitarbeiter" || table != "Bestellungen")
+                {
+                    
+                }
             }
             SqlCommand cmd = new SqlCommand("Delete from " + table, con);
             SqlBulkCopy bulkCopy = new SqlBulkCopy(con);
@@ -182,6 +185,7 @@ namespace unserLagerhaus
             {
                 for (int i = 0; i < data.Columns.Count; i++)
                 {
+
                     if (!Convert.IsDBNull(dr[i]))
                     {
                         string value = dr[i].ToString();
