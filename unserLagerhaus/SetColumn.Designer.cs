@@ -86,6 +86,7 @@ namespace unserLagerhaus
             this.Controls.Add(this.btn_confirm);
             this.Name = "SetColumn";
             this.Text = "SetColumn";
+            this.Load += new System.EventHandler(this.SetColumn_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

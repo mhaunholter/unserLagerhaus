@@ -12,6 +12,8 @@ namespace unserLagerhaus
 {
     public partial class SetColumn : Form
     {
+        private DataTable data;
+        private Array ar;
         public SetColumn()
         {
             InitializeComponent();
@@ -22,11 +24,18 @@ namespace unserLagerhaus
 
         }
 
-        public void createHeaders(DataTable data)
+        public void importDataTable(DataTable data)
         {
-            foreach(DataColumn x in data.Columns)
+            this.data = data;
+        }
+
+        private void SetColumn_Load(object sender, EventArgs e)
+        {
+            ar = new Array[data.Columns.Count];
+            foreach(string x in data.Columns)
             {
-                lb_columnName.Text = Convert.ToString(x);
+                lb_columnName.Text = x;
+
             }
         }
     }

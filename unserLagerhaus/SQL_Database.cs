@@ -136,10 +136,11 @@ namespace unserLagerhaus
                     dr[i] = rows[i];
                 }
                 csvData.Rows.Add(dr);
-                if (table != "Produkte" || table != "Mitarbeiter" || table != "Bestellungen")
+                if (table != "Produkte" && table != "Mitarbeiter" && table != "Bestellungen")
                 {
                     SetColumn setColumn = new SetColumn();
-                    setColumn.createHeaders(csvData);
+                    setColumn.importDataTable(csvData);
+                    setColumn.ShowDialog();
                 }
             }
             SqlCommand cmd = new SqlCommand("Delete from " + table, con);
