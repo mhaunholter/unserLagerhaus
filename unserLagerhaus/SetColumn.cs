@@ -22,9 +22,12 @@ namespace unserLagerhaus
 
         }
 
-        public Array setColumn()
+        public void createHeaders(DataTable data)
         {
-            return;
+            foreach(DataColumn x in data.Columns)
+            {
+                lb_columnName.Text = Convert.ToString(x);
+            }
         }
     }
 }

@@ -138,7 +138,8 @@ namespace unserLagerhaus
                 csvData.Rows.Add(dr);
                 if (table != "Produkte" || table != "Mitarbeiter" || table != "Bestellungen")
                 {
-                    
+                    SetColumn setColumn = new SetColumn();
+                    setColumn.createHeaders(csvData);
                 }
             }
             SqlCommand cmd = new SqlCommand("Delete from " + table, con);
