@@ -51,7 +51,7 @@ namespace unserLagerhaus
             this.cb_type.Items.AddRange(new object[] {
             "int",
             "bigint",
-            "nvarchar()",
+            "nvarchar",
             "date",
             "float(8,2)"});
             this.cb_type.Location = new System.Drawing.Point(37, 53);
