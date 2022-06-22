@@ -40,6 +40,7 @@ namespace unserLagerhaus
             this.label2 = new System.Windows.Forms.Label();
             this.btn_export = new System.Windows.Forms.Button();
             this.btn_import = new System.Windows.Forms.Button();
+            this.btn_deleteTable = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Table)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_logo)).BeginInit();
             this.SuspendLayout();
@@ -57,15 +58,10 @@ namespace unserLagerhaus
             // cb_table
             // 
             this.cb_table.FormattingEnabled = true;
-            this.cb_table.Items.AddRange(new object[] {
-            "Produkte",
-            "Mitarbeiter",
-            "Bestellungen"});
             this.cb_table.Location = new System.Drawing.Point(190, 74);
             this.cb_table.Name = "cb_table";
             this.cb_table.Size = new System.Drawing.Size(121, 21);
             this.cb_table.TabIndex = 2;
-            this.cb_table.Text = "Produkte";
             this.cb_table.SelectedIndexChanged += new System.EventHandler(this.cb_table_SelectedIndexChanged);
             // 
             // dgv_Table
@@ -140,11 +136,22 @@ namespace unserLagerhaus
             this.btn_import.UseVisualStyleBackColor = true;
             this.btn_import.Click += new System.EventHandler(this.btn_import_Click);
             // 
+            // btn_deleteTable
+            // 
+            this.btn_deleteTable.Location = new System.Drawing.Point(519, 74);
+            this.btn_deleteTable.Name = "btn_deleteTable";
+            this.btn_deleteTable.Size = new System.Drawing.Size(133, 23);
+            this.btn_deleteTable.TabIndex = 15;
+            this.btn_deleteTable.Text = "Aktuelle Tabelle löschen";
+            this.btn_deleteTable.UseVisualStyleBackColor = true;
+            this.btn_deleteTable.Click += new System.EventHandler(this.btn_deleteTable_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btn_deleteTable);
             this.Controls.Add(this.btn_import);
             this.Controls.Add(this.btn_export);
             this.Controls.Add(this.label2);
@@ -177,6 +184,7 @@ namespace unserLagerhaus
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btn_export;
         private System.Windows.Forms.Button btn_import;
+        private System.Windows.Forms.Button btn_deleteTable;
     }
 }
 

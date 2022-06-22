@@ -13,7 +13,7 @@ namespace unserLagerhaus
     public partial class SetColumn : Form
     {
         private DataTable data;
-        private string[,] ar;
+        public static string[,] ar;
         private int i;
         public SetColumn()
         {
@@ -21,22 +21,25 @@ namespace unserLagerhaus
         }
 
         private void btn_confirm_Click(object sender, EventArgs e)
-        {            
+        {   
+            if(cb_type.Text == "")
+            {
+                MessageBox.Show("Bitte wählen Sie einen Datentyp aus");
+                return;
+            }
             lb_columnName.Text = ar[i, 0];
-                if(cb_type.Text == "nvarchar")
-                {
-                    ar[i, 1] = cb_type.Text + "(" + tb_charLength.Text + ")";
-                }
-                else
-                {
+ 
                     ar[i, 1] = cb_type.Text;
-                }
             i++;
             if(i == data.Columns.Count)
             {
                 ActiveForm.Close();
             }
-            lb_columnName.Text = ar[i, 0];
+            else
+            {
+                lb_columnName.Text = ar[i, 0];
+            }
+            
         }
 
         public void importDataTable(DataTable data)
@@ -53,15 +56,8 @@ namespace unserLagerhaus
                 ar[i, 0] = x.ToString();
                 i++;
             }
-            i = 0;
+            i = 1;
             lb_columnName.Text = ar[i, 0];
-        }
-
-        private void nextColumn()
-        {
-            for (int i = 0; i < data.Columns.Count; i++)
-            {
-            }
         }
     }
 }

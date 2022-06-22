@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Windows.Forms;
 using System.Data.SqlTypes;
 using System.IO;
+using System.Collections.Generic;
 
 namespace unserLagerhaus
 {
@@ -13,22 +14,11 @@ namespace unserLagerhaus
         private static SqlCommand cmd = new SqlCommand();
         private static string connectionstring;
         private static string tb;
+        private static bool alreadyExists;
 
-        public static void start(bool integrated_security, string user, string password)
+        public static void start(string password)
         {
-            switch (integrated_security)
-            {
-                case true:
-                    {
-                        con.ConnectionString = "Server=(localdb)\\MSSQLLocalDB;Integrated security=SSPI;";
-                        break;
-                    }
-                case false:
-                    {
-                        con.ConnectionString = "Server=(localdb)\\MSSQLLocalDB;Integrated security=SSPI;";
-                        break;
-                    }
-            }
+            con.ConnectionString = "Server=(localdb)\\MSSQLLocalDB;Integrated security=SSPI;";
             connectionstring = con.ConnectionString;
         }
 
@@ -70,7 +60,7 @@ namespace unserLagerhaus
         {
             tb = table;
             DataTable dataTable = new DataTable();
-            con.ConnectionString = connectionstring;
+            //con.ConnectionString = connectionstring;
             cmd.CommandText = "Select * from " + table;
             try
             {
@@ -86,6 +76,7 @@ namespace unserLagerhaus
 
         public static void saveTable(DataTable data)
         {
+            DataTable backup = fill_Datagridview(tb);
             SqlCommand cmd = new SqlCommand("Delete from " + tb, con);
             SqlBulkCopy bulkCopy = new SqlBulkCopy(con);
             bulkCopy.BatchSize = 500;
@@ -96,7 +87,15 @@ namespace unserLagerhaus
             cmd.CommandText = "DBCC CHECKIDENT('[" + tb + "]', RESEED, 0)";
             cmd.ExecuteNonQuery();
             SqlDecimal.Round(8, 2);
-            bulkCopy.WriteToServer(data);
+            try
+            {
+                bulkCopy.WriteToServer(data);
+            }catch (Exception ex)
+            {
+                MessageBox.Show("Ein Fehler wurde verursachtet, vermutlich weil der Inhalt der Zeile mehr als 50 Zeichen hat oder mehr als float(8,2)");
+                bulkCopy.WriteToServer(backup);
+            }
+            
             con.Close();
         }
 
@@ -107,20 +106,24 @@ namespace unserLagerhaus
 
         public static void ImportCSV(string table)
         {
-            string filename = "";
+            string filepath = "";
             if (table == "Produkte" || table == "Mitarbeiter" || table == "Bestellungen")
             {
-                filename = @"..\..\Properties\" + table + ".csv";
+                filepath = @"..\..\Properties\" + table + ".csv";
             }
             else
             {
                 OpenFileDialog openFileDialog = new OpenFileDialog();
                 if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-                    filename = openFileDialog.FileName;
+                    filepath = openFileDialog.FileName;
                 }
-            }
-            StreamReader csvReader = new StreamReader(filename);
+                else
+                {
+                    return;
+                }
+            }          
+            StreamReader csvReader = new StreamReader(filepath);
             DataTable csvData = new DataTable();
             string[] headers = csvReader.ReadLine().Split(';');
             foreach (string header in headers)
@@ -135,22 +138,39 @@ namespace unserLagerhaus
                 {
                     dr[i] = rows[i];
                 }
-                csvData.Rows.Add(dr);
-                if (table != "Produkte" && table != "Mitarbeiter" && table != "Bestellungen")
+                csvData.Rows.Add(dr);                
+            }
+            if (table != "Produkte" && table != "Mitarbeiter" && table != "Bestellungen")
+            {
+                SetColumn setColumn = new SetColumn();
+                setColumn.importDataTable(csvData);
+                setColumn.ShowDialog();
+                int length = csvData.Columns.Count;
+                table = Path.GetFileNameWithoutExtension(filepath);
+                alreadyExists = false;
+                addTable(length, table, alreadyExists);
+                if (alreadyExists)
                 {
-                    SetColumn setColumn = new SetColumn();
-                    setColumn.importDataTable(csvData);
-                    setColumn.ShowDialog();
+                    return;
                 }
             }
             SqlCommand cmd = new SqlCommand("Delete from " + table, con);
             SqlBulkCopy bulkCopy = new SqlBulkCopy(con);
-            bulkCopy.BatchSize = 500;
-            bulkCopy.NotifyAfter = 1000;
             bulkCopy.DestinationTableName = table;
-            cmd.ExecuteNonQuery();
+            cmd.ExecuteNonQuery();            
             SqlDecimal.Round(8, 2);
-            bulkCopy.WriteToServer(csvData);
+            try
+            {
+                bulkCopy.WriteToServer(csvData);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Die Daten entsprechen nicht dem Datentyp, bitte wählen Sie nvarchar(50) aus oder überprüfen Sie ihre Daten");
+                cmd.CommandText = "Drop table " + table;
+                cmd.ExecuteNonQuery();
+            }
+            
+            //con.Close();
         }
 
         public static DataTable Search(string searchword, string table, string searchBy)
@@ -210,6 +230,73 @@ namespace unserLagerhaus
             }
             sw.Close();
 
+        }
+
+        public static List<string> getTable(List<string> db)
+        {
+            //Gets every Table that is in the database
+            con.ConnectionString = "Server = (localdb)\\MSSQLLocalDB; Integrated security = SSPI;database=UnserLagerhaus_3ITK_Hain";
+            con.Open();
+            DataTable tables = con.GetSchema("Tables");
+            foreach (DataRow table in tables.Rows)
+            {
+                //[2] because [0] is database, [1] is dbo, [2] is table name
+                if(table[2].ToString() == "Admin")
+                {
+                    
+                }
+                db.Add(table[2].ToString());
+            }
+            con.Close();
+            return db;
+        }
+
+        private static void addTable(int length, string table, bool alreadyExists)
+        {
+            try
+            {
+                cmd.CommandText = "create table dbo." + table + "([ID][int] IDENTITY(1,1) NOT NULL PRIMARY KEY)";
+                con.Open();
+                cmd.ExecuteNonQuery();
+                for (int i = 1; i < length; i++)
+                {
+                    cmd.CommandText = "Alter Table dbo." + table + " add " + SetColumn.ar[i, 0] + " " + SetColumn.ar[i, 1];
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Tabellenname ist schon vergeben");
+                alreadyExists = true;
+            }            
+        }
+
+        public static void deleteTable(string table)
+        {
+            cmd.CommandText = "drop table " + table;
+            con.Open();
+            cmd.ExecuteNonQuery();
+            con.Close();
+        }
+
+        public static void passwordTable(string hashedPassword)
+        {
+            con.ConnectionString = "Server = (localdb)\\MSSQLLocalDB; Integrated security = SSPI;database=UnserLagerhaus_3ITK_Hain";
+            cmd.CommandText = "create table dbo.Admin([Password][nvarchar](100))";
+            cmd.Connection = con;
+            con.Open();
+            cmd.ExecuteNonQuery();
+            cmd.CommandText = "Insert into Admin values('"+hashedPassword+"')";
+            cmd.ExecuteNonQuery();
+            con.Close();
+        }
+
+        public static string getPassword()
+        {
+            cmd.CommandText = "Select * from Admin";
+            SqlDataReader reader = cmd.ExecuteReader();
+            string hashedpassword = reader.GetString(0);
+            return hashedpassword;
         }
     }
 }

@@ -18,21 +18,12 @@ namespace unserLagerhaus
             InitializeComponent();
         }
 
-        /*
-         * Todos
-         * Import CSV + create SQL Table
-         * Export to CSV
-         * Admin who can change, add and edit Tables
-         */
         private void Main_Load(object sender, EventArgs e)
         {
             Login login = new Login();
             login.ShowDialog();
             SQL_Database.create();
-            dataTable = SQL_Database.fill_Datagridview(cb_table.Text);
-            dgv_Table.DataSource = dataTable;
-            dgv_Table.Columns[0].ReadOnly = true;
-            cb_searchBy_Change();
+            fill_cb_table();
         }
 
         private void cb_table_SelectedIndexChanged(object sender, EventArgs e)
@@ -56,41 +47,11 @@ namespace unserLagerhaus
         private void cb_searchBy_Change()
         {
             cb_searchBy.Items.Clear();
-            //switch (cb_table.Text)
-            //{
-            //    case "Produkte":
-            //        {
-            //            cb_searchBy.Items.Add("ID");
-            //            cb_searchBy.Items.Add("Bezeichnung");
-            //            cb_searchBy.Items.Add("Anzahl");
-            //            cb_searchBy.Items.Add("Kategorie");
-            //            cb_searchBy.Items.Add("Lagerabteilung");
-            //            cb_searchBy.Items.Add("Regal");
-
-            //            break;
-            //        }
-            //    case "Mitarbeiter":
-            //        {
-            //            cb_searchBy.Items.Add("ID");
-            //            cb_searchBy.Items.Add("Vorname");
-            //            cb_searchBy.Items.Add("Nachname");
-            //            cb_searchBy.Items.Add("Arbeitsstelle");
-            //            cb_searchBy.Items.Add("Arbeitet seit");
-            //            cb_searchBy.Items.Add("SV-Nummer");
-            //            cb_searchBy.Items.Add("Gehalt");
-            //            break;
-            //        }
-            //    case "Bestellungen":
-            //        {
-            //            cb_searchBy.Items.Add("ID");
-            //            cb_searchBy.Items.Add("Bestellt am");
-            //            cb_searchBy.Items.Add("Angekommen");
-            //            cb_searchBy.Items.Add("Bezahlt");
-            //            cb_searchBy.Items.Add("Bezeichnung");
-            //            cb_searchBy.Items.Add("Anzahl");
-            //            break;
-            //        }
-            //}
+            dataTable = SQL_Database.fill_Datagridview(cb_table.Text);
+            foreach (DataColumn column in dataTable.Columns)
+            {
+                cb_searchBy.Items.Add(column.ColumnName);                
+            }            
         }
 
         private void btn_search_Click(object sender, EventArgs e)
@@ -109,7 +70,10 @@ namespace unserLagerhaus
             {
                 path = saveFileDialog.FileName;
             }
-            btn_export.Text = path;
+            else
+            {
+                return;
+            }
             DataTable data = new DataTable();
             TableToDataTable(data);
             SQL_Database.ExportCSV(path.Replace("\\", "/"), data);
@@ -157,7 +121,27 @@ namespace unserLagerhaus
         private void btn_import_Click(object sender, EventArgs e)
         {
             SQL_Database.ImportCSV("");
+            fill_cb_table();
 
+        }
+
+        private void fill_cb_table()
+        {
+            List<string> list = new List<string>();
+            list = SQL_Database.getTable(list);
+            cb_table.Items.Clear();
+            foreach(string s in list)
+            {
+                cb_table.Items.Add(s);
+            }
+        }
+
+        private void btn_deleteTable_Click(object sender, EventArgs e)
+        {
+            dgv_Table.DataSource = null;
+            SQL_Database.deleteTable(cb_table.Text);
+            fill_cb_table();
+            cb_table.Text = "";
         }
     }
 }

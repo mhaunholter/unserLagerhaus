@@ -13,7 +13,8 @@ namespace unserLagerhaus
     public partial class Login : Form
     {
         private bool exit;
-        private bool integrated_security;
+        public bool firstTimeAdmin = true;
+        public bool correctPassword = false;
         public Login()
         {
             InitializeComponent();
@@ -21,16 +22,31 @@ namespace unserLagerhaus
 
         private void btn_login_Click(object sender, EventArgs e)
         {
-            if (integrated_security == false)
+            if (cb_type.Text == "Admin")
             {
-                if (tb_user.Text == "" || tb_password.Text == "" || cb_type.Text != "SSPI" && cb_type.Text != "Benutzer & Passwort")
+                if (tb_password.Text == "")
                 {
                     MessageBox.Show("Wrong Input!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
+                if (firstTimeAdmin)
+                {
+                    string hashedPassword = BCrypt_Class.HashPassword(tb_password.Text);
+                    SQL_Database.passwordTable(hashedPassword);
+                }
+                else
+                {
+                   correctPassword = BCrypt.Net.BCrypt.Verify(tb_password.Text, SQL_Database.getPassword());
+                }
             }
+            if(cb_type.Text != "Benutzer" && cb_type.Text != "Admin")
+            {
+                MessageBox.Show("Wrong Input!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }            
             exit = true;
-            SQL_Database.start(integrated_security,tb_user.Text,tb_password.Text);
+            SQL_Database.start(tb_password.Text);
+                       
             ActiveForm.Close();
         }
 
@@ -51,18 +67,32 @@ namespace unserLagerhaus
         {
             switch (cb_type.Text)
             {
-                case "SSPI":
+                case "Benutzer":
                     {
                         tb_password.Enabled = false;
-                        tb_user.Enabled = false;
-                        integrated_security = true;
+                        label2.Text = "Passwort";
                         break;
                     }
-                case "Benutzer & Passwort":
+                case "Admin":
                     {
                         tb_password.Enabled = true;
-                        tb_user.Enabled = true;
-                        integrated_security = false;
+                        List<string> list = new List<string>();
+                        list = SQL_Database.getTable(list);
+                        foreach (string s in list)
+                        {
+                            if (s == "Admin")
+                            {
+                                firstTimeAdmin = false;
+                            }
+                        }
+                        if (firstTimeAdmin)
+                        {
+                            label2.Text = "Passwort erstellen";
+                        }
+                        else
+                        {
+                            label2.Text = "Passwort";
+                        }
                         break;
                     }
             }

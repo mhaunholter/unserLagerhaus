@@ -32,12 +32,11 @@ namespace unserLagerhaus
             this.btn_confirm = new System.Windows.Forms.Button();
             this.cb_type = new System.Windows.Forms.ComboBox();
             this.lb_columnName = new System.Windows.Forms.Label();
-            this.tb_charLength = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // btn_confirm
             // 
-            this.btn_confirm.Location = new System.Drawing.Point(58, 106);
+            this.btn_confirm.Location = new System.Drawing.Point(60, 80);
             this.btn_confirm.Name = "btn_confirm";
             this.btn_confirm.Size = new System.Drawing.Size(75, 23);
             this.btn_confirm.TabIndex = 0;
@@ -51,7 +50,7 @@ namespace unserLagerhaus
             this.cb_type.Items.AddRange(new object[] {
             "int",
             "bigint",
-            "nvarchar",
+            "nvarchar(50)",
             "date",
             "float(8,2)"});
             this.cb_type.Location = new System.Drawing.Point(37, 53);
@@ -68,19 +67,11 @@ namespace unserLagerhaus
             this.lb_columnName.TabIndex = 2;
             this.lb_columnName.Text = "label";
             // 
-            // tb_charLength
-            // 
-            this.tb_charLength.Location = new System.Drawing.Point(37, 80);
-            this.tb_charLength.Name = "tb_charLength";
-            this.tb_charLength.Size = new System.Drawing.Size(121, 20);
-            this.tb_charLength.TabIndex = 3;
-            // 
             // SetColumn
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(192, 146);
-            this.Controls.Add(this.tb_charLength);
             this.Controls.Add(this.lb_columnName);
             this.Controls.Add(this.cb_type);
             this.Controls.Add(this.btn_confirm);
@@ -97,6 +88,5 @@ namespace unserLagerhaus
         private System.Windows.Forms.Button btn_confirm;
         private System.Windows.Forms.ComboBox cb_type;
         private System.Windows.Forms.Label lb_columnName;
-        private System.Windows.Forms.TextBox tb_charLength;
     }
 }
